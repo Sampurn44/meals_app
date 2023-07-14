@@ -3,9 +3,15 @@ import 'package:meals_app/Widgets/category_grid.dart';
 import 'package:meals_app/data/dummy_data.dart';
 import 'package:meals_app/data/dummy_data.dart';
 import 'package:meals_app/models/category.dart';
+import 'package:meals_app/screens/meals.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
+
+  void _selectedcategory(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (ctx) => MealsScreen(title: "Some Meal", meals: [])));
+  }
 
   @override
   Widget build(BuildContext context) {
