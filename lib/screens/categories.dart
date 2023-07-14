@@ -8,9 +8,18 @@ import 'package:meals_app/screens/meals.dart';
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
 
-  void _selectedcategory(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (ctx) => MealsScreen(title: "Some Meal", meals: [])));
+  void _selectedcategory(BuildContext context, Category category) {
+    final filteredMeals = dummyMeals
+        .where((meal) => meal.categories.contains(category.id))
+        .toList();
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => MealsScreen(
+          title: category.title,
+          meals: filteredMeals,
+        ),
+      ),
+    );
   }
 
   @override
@@ -28,7 +37,12 @@ class CategoriesScreen extends StatelessWidget {
               mainAxisSpacing: 20),
           children: [
             for (final category in availableCategories)
-              CategoryGridItems(category: category),
+              CategoryGridItems(
+                category: category,
+                onSelectCategory: () {
+                  _selectedcategory(context, category);
+                },
+              ),
           ],
         ));
   }
