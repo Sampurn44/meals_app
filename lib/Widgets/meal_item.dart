@@ -73,7 +73,7 @@ class MealState extends StatelessWidget {
                       children: [
                         MealTrait(
                           icon: Icons.schedule,
-                          label: '${meal.duration} minutes',
+                          label: '${meal.duration} min',
                         ),
                         const SizedBox(
                           width: 12,
