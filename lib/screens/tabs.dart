@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/Widgets/main_drawer.dart';
-import 'package:meals_app/data/dummy_data.dart';
 import 'package:meals_app/provider/filters_provider.dart';
 import 'package:meals_app/provider/meal_provider.dart';
 import 'package:meals_app/screens/categories.dart';
 import 'package:meals_app/screens/filters.dart';
 import 'package:meals_app/screens/meals.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meals_app/data/dummy_data.dart';
-
-import '../models/meal.dart';
 
 const kfilters = {
   Filter.glutonfree: false,
@@ -29,7 +25,6 @@ class TabScreen extends ConsumerStatefulWidget {
 
 class _TabScreenState extends ConsumerState<TabScreen> {
   int _selectedstate = 0;
-  Map<Filter, bool> _selectedfilter = kfilters;
 
   void _selectpage(int index) {
     setState(() {
@@ -40,36 +35,15 @@ class _TabScreenState extends ConsumerState<TabScreen> {
   void _setscreen(String identifier) async {
     Navigator.of(context).pop();
     if (identifier == 'filters') {
-      final result = await Navigator.of(context).push<Map<Filter, bool>>(
-        MaterialPageRoute(
-            builder: (ctx) => FilterScreen(
-                  currentFilters: _selectedfilter,
-                )),
+      await Navigator.of(context).push<Map<Filter, bool>>(
+        MaterialPageRoute(builder: (ctx) => const FilterScreen()),
       );
-      setState(() {
-        _selectedfilter = result ?? kfilters;
-      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final meals = ref.watch(mealProvider);
-    final availablemeal = meals.where((meal) {
-      if (_selectedfilter[Filter.glutonfree]! && !meal.isGlutenFree) {
-        return false;
-      }
-      if (_selectedfilter[Filter.lactosefree]! && !meal.isLactoseFree) {
-        return false;
-      }
-      if (_selectedfilter[Filter.vegan]! && !meal.isVegan) {
-        return false;
-      }
-      if (_selectedfilter[Filter.vegetarian]! && !meal.isVegetarian) {
-        return false;
-      }
-      return true;
-    }).toList();
+    final availablemeal = ref.watch(FilteredMealProvider);
     Widget active = CategoriesScreen(
       availablemeal: availablemeal,
     );
