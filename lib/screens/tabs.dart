@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/Widgets/main_drawer.dart';
+import 'package:meals_app/provider/favourites_provider.dart';
 import 'package:meals_app/provider/filters_provider.dart';
 import 'package:meals_app/provider/meal_provider.dart';
 import 'package:meals_app/screens/categories.dart';
@@ -36,7 +37,7 @@ class _TabScreenState extends ConsumerState<TabScreen> {
     Navigator.of(context).pop();
     if (identifier == 'filters') {
       await Navigator.of(context).push<Map<Filter, bool>>(
-        MaterialPageRoute(builder: (ctx) => const FilterScreen()),
+        MaterialPageRoute(builder: (ctx) => const FiltersScreen()),
       );
     }
   }
@@ -50,7 +51,7 @@ class _TabScreenState extends ConsumerState<TabScreen> {
     var activepagetitle = 'Categories';
 
     if (_selectedstate == 1) {
-      final favouritemeal = ref.watch(mealProvider);
+      final favouritemeal = ref.watch(mealsProvider);
       active = MealsScreen(
         meals: favouritemeal,
       );
