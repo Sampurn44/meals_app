@@ -1,100 +1,96 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:meals_app/Widgets/main_drawer.dart';
-import 'package:meals_app/provider/filters_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meals_app/screens/tabs.dart';
 
-class FilterScreen extends ConsumerWidget {
-  const FilterScreen({super.key});
+// import 'package:meals/screens/tabs.dart';
+// import 'package:meals/widgets/main_drawer.dart';
+import 'package:meals_app/provider/filters_provider.dart';
+
+class FiltersScreen extends ConsumerWidget {
+  const FiltersScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final activefilter = ref.watch(filtersProvider);
+    final activeFilters = ref.watch(filtersProvider);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Your Filters',
-        ),
+        title: const Text('Your Filters'),
       ),
       body: Column(
         children: [
           SwitchListTile(
-            title: Text(
-              'Gluteen-Free',
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
-            ),
-            subtitle: Text(
-              'Only include Gluteen free meals',
-              style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
-            ),
-            activeColor: Theme.of(context).colorScheme.tertiary,
-            contentPadding: const EdgeInsets.only(
-              left: 34,
-              right: 22,
-            ),
-            value: activefilter[Filter.glutonfree]!,
+            value: activeFilters[Filter.glutonfree]!,
             onChanged: (isChecked) {
               ref
                   .read(filtersProvider.notifier)
                   .Setfilter(Filter.glutonfree, isChecked);
             },
-          ),
-          SwitchListTile(
             title: Text(
-              'Lactose-Free',
+              'Gluten-free',
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
                   ),
             ),
             subtitle: Text(
-              'Only include Lactose free meals',
+              'Only include gluten-free meals.',
               style: Theme.of(context).textTheme.labelMedium!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
                   ),
             ),
             activeColor: Theme.of(context).colorScheme.tertiary,
-            contentPadding: const EdgeInsets.only(
-              left: 34,
-              right: 22,
-            ),
-            value: activefilter[Filter.lactosefree]!,
+            contentPadding: const EdgeInsets.only(left: 34, right: 22),
+          ),
+          SwitchListTile(
+            value: activeFilters[Filter.lactosefree]!,
             onChanged: (isChecked) {
               ref
                   .read(filtersProvider.notifier)
                   .Setfilter(Filter.lactosefree, isChecked);
             },
-          ),
-          SwitchListTile(
             title: Text(
-              'Veg Only',
+              'Lactose-free',
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
                   ),
             ),
             subtitle: Text(
-              'Only include Vegetarian meals',
+              'Only include lactose-free meals.',
               style: Theme.of(context).textTheme.labelMedium!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
                   ),
             ),
             activeColor: Theme.of(context).colorScheme.tertiary,
-            contentPadding: const EdgeInsets.only(
-              left: 34,
-              right: 22,
-            ),
-            value: activefilter[Filter.vegetarian]!,
+            contentPadding: const EdgeInsets.only(left: 34, right: 22),
+          ),
+          SwitchListTile(
+            value: activeFilters[Filter.vegetarian]!,
             onChanged: (isChecked) {
               ref
                   .read(filtersProvider.notifier)
                   .Setfilter(Filter.vegetarian, isChecked);
             },
+            title: Text(
+              'Vegetarian',
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
+            ),
+            subtitle: Text(
+              'Only include vegetarian meals.',
+              style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
+            ),
+            activeColor: Theme.of(context).colorScheme.tertiary,
+            contentPadding: const EdgeInsets.only(left: 34, right: 22),
           ),
           SwitchListTile(
+            value: activeFilters[Filter.vegan]!,
+            onChanged: (isChecked) {
+              ref
+                  .read(filtersProvider.notifier)
+                  .Setfilter(Filter.vegan, isChecked);
+            },
             title: Text(
               'Vegan',
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -102,23 +98,14 @@ class FilterScreen extends ConsumerWidget {
                   ),
             ),
             subtitle: Text(
-              'Only include Vegan meals',
+              'Only include vegan meals.',
               style: Theme.of(context).textTheme.labelMedium!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
                   ),
             ),
             activeColor: Theme.of(context).colorScheme.tertiary,
-            contentPadding: const EdgeInsets.only(
-              left: 34,
-              right: 22,
-            ),
-            value: activefilter[Filter.vegan]!,
-            onChanged: (isChecked) {
-              ref
-                  .read(filtersProvider.notifier)
-                  .Setfilter(Filter.vegan, isChecked);
-            },
-          )
+            contentPadding: const EdgeInsets.only(left: 34, right: 22),
+          ),
         ],
       ),
     );
